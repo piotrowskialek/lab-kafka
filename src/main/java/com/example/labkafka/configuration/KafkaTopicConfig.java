@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Configuration
 public class KafkaTopicConfig {
-    public static final String CHAT_TOPIC_NAME = "chat2";
+    public static final String CHAT_TOPIC_NAME = "chat";
 
     @Value(value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;

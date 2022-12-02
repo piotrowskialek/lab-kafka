@@ -25,7 +25,7 @@ public class ChatListener implements ConsumerSeekAware {
     }
 
     @KafkaListener(topics = CHAT_TOPIC_NAME)
-    public void listenGroupFoo(
+    public void listenMessages(
             @Payload Message message,
             @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition
     ) {
