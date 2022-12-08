@@ -41,6 +41,9 @@ public class ChatEndpoint {
     public Flux<MessageWithPartition> read(
             @RequestParam(value = "sender", required = false) String sender
     ) {
-        return chatService.readMessages().filter(message -> true);
+        if(sender == null) {
+            return chatService.readMessages();
+        }
+        return chatService.readMessages().filter(message ->sender.equals(message.getSender()));
     }
 }
