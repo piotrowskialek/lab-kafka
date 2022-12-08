@@ -11,6 +11,9 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Map;
+import org.apache.kafka.common.TopicPartition;
+
 import static com.example.labkafka.configuration.KafkaTopicConfig.CHAT_TOPIC_NAME;
 
 @Service
@@ -39,10 +42,10 @@ public class ChatListener implements ConsumerSeekAware {
         chatService.consumeMessage(messageWithPartition);
     }
 
-//    @Override
-//    public void onPartitionsAssigned(Map<TopicPartition, Long> assignments, ConsumerSeekCallback callback) {
-//        assignments.keySet().stream()
-//                .filter(partition -> CHAT_TOPIC_NAME.equals(partition.topic()))
-//                .forEach(partition -> callback.seekToBeginning(CHAT_TOPIC_NAME, partition.partition()));
-//    }
+    @Override
+    public void onPartitionsAssigned(Map<TopicPartition, Long> assignments, ConsumerSeekCallback callback) {
+        assignments.keySet().stream()
+                .filter(partition -> CHAT_TOPIC_NAME.equals(partition.topic()))
+                .forEach(partition -> callback.seekToBeginning(CHAT_TOPIC_NAME, partition.partition()));
+    }
 }
