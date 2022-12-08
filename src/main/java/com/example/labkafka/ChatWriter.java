@@ -27,7 +27,7 @@ public class ChatWriter {
 
         String partitionKey = labGroupProperties.getName();
         ListenableFuture<SendResult<String, Message>> future =
-                kafkaTemplate.send(CHAT_TOPIC_NAME, message);
+                kafkaTemplate.send(CHAT_TOPIC_NAME,partitionKey, message);
 
         future.addCallback(new ListenableFutureCallback<>() {
 
