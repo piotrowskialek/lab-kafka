@@ -1,5 +1,8 @@
-package com.example.labkafka;
+package com.example.labkafka.api;
 
+import com.example.labkafka.ChatService;
+import com.example.labkafka.Message;
+import com.example.labkafka.MessageWithPartition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +37,7 @@ public class ChatListener implements ConsumerSeekAware {
         @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition
     ) {
 
-        logger.info("Received Message: {}", message);
+        logger.info("Received Message: {} from partition: {}", message, partition);
         MessageWithPartition messageWithPartition = new MessageWithPartition(
             partition,
             message.sender(),

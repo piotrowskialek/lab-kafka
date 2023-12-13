@@ -1,5 +1,9 @@
-package com.example.labkafka;
+package com.example.labkafka.api;
 
+import com.example.labkafka.ChatService;
+import com.example.labkafka.infra.ChatWriter;
+import com.example.labkafka.Message;
+import com.example.labkafka.MessageWithPartition;
 import com.example.labkafka.configuration.LabGroupProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

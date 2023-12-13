@@ -1,5 +1,6 @@
-package com.example.labkafka;
+package com.example.labkafka.infra;
 
+import com.example.labkafka.Message;
 import com.example.labkafka.configuration.LabGroupProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
