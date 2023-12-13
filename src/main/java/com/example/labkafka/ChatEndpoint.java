@@ -1,9 +1,9 @@
 package com.example.labkafka;
 
 import com.example.labkafka.configuration.LabGroupProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,18 +20,15 @@ public class ChatEndpoint {
     private final ChatService chatService;
     private final LabGroupProperties labGroupProperties;
 
-    @Autowired
-    public ChatEndpoint(ChatWriter chatWriter,
-                        ChatService chatService,
-                        LabGroupProperties labGroupProperties) {
+    public ChatEndpoint(ChatWriter chatWriter, ChatService chatService, LabGroupProperties labGroupProperties) {
         this.chatWriter = chatWriter;
         this.chatService = chatService;
         this.labGroupProperties = labGroupProperties;
     }
 
-    @GetMapping("/send/{text}")
-    public Message sent(@PathVariable("text") String text) {
-        String sender = labGroupProperties.getName();
+    @PostMapping("/send/")
+    public Message send(@RequestBody String text) {
+        String sender = labGroupProperties.name();
         Message message = new Message(sender, LocalDateTime.now(), text);
         chatWriter.writeMessage(message);
         return message;
@@ -44,6 +41,6 @@ public class ChatEndpoint {
         if (sender == null) {
             return chatService.readMessages();
         }
-        return chatService.readMessages().filter(message -> sender.equals(message.getSender()));
+        return chatService.readMessages().filter(message -> sender.equals(message.sender()));
     }
 }

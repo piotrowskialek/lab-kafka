@@ -1,14 +1,10 @@
 package com.example.labkafka.configuration;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
-@Configuration
-public class LabGroupProperties {
-    @Value(value = "${lab.group.name}")
-    private String name;
+@ConstructorBinding
+@ConfigurationProperties("lab.group")
+public record LabGroupProperties(String name) {
 
-    public String getName() {
-        return name;
-    }
 }

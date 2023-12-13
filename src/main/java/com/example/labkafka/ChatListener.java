@@ -36,10 +36,11 @@ public class ChatListener implements ConsumerSeekAware {
 
         logger.info("Received Message: {}", message);
         MessageWithPartition messageWithPartition = new MessageWithPartition(
-            message.getSender(),
-            message.getAt(),
-            message.getText(),
-            partition);
+            partition,
+            message.sender(),
+            message.at(),
+            message.text()
+        );
         chatService.consumeMessage(messageWithPartition);
     }
 

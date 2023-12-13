@@ -4,6 +4,7 @@ import com.example.labkafka.Message;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -17,6 +18,7 @@ import java.util.Map;
 
 @EnableKafka
 @Configuration
+@EnableConfigurationProperties(LabGroupProperties.class)
 public class KafkaConsumerConfig {
     private static final String CONSUMER_GROUP_PREFIX = "CONSUMER_GROUP_";
 
@@ -37,7 +39,7 @@ public class KafkaConsumerConfig {
             bootstrapAddress);
         props.put(
             ConsumerConfig.GROUP_ID_CONFIG,
-            CONSUMER_GROUP_PREFIX + labGroupProperties.getName());
+            CONSUMER_GROUP_PREFIX + labGroupProperties.name());
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         final JsonDeserializer<Message> messageJsonDeserializer = new JsonDeserializer<>();
         messageJsonDeserializer.trustedPackages("*");
