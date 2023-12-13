@@ -15,12 +15,11 @@ public class ChatService {
         try {
             messagesCache.tryEmitNext(message);
         } catch (Exception e) {
-            logger.error("Got exception on consumption of message: {}",message, e );
+            logger.error("Got exception on consumption of message: {}", message, e);
         }
     }
 
     public Flux<MessageWithPartition> readMessages() {
         return messagesCache.asFlux();
     }
-
 }

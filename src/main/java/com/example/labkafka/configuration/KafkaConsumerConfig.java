@@ -33,11 +33,11 @@ public class KafkaConsumerConfig {
     public ConsumerFactory<String, Message> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(
-                ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                bootstrapAddress);
+            ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
+            bootstrapAddress);
         props.put(
-                ConsumerConfig.GROUP_ID_CONFIG,
-                CONSUMER_GROUP_PREFIX + labGroupProperties.getName());
+            ConsumerConfig.GROUP_ID_CONFIG,
+            CONSUMER_GROUP_PREFIX + labGroupProperties.getName());
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         final JsonDeserializer<Message> messageJsonDeserializer = new JsonDeserializer<>();
         messageJsonDeserializer.trustedPackages("*");
@@ -49,7 +49,7 @@ public class KafkaConsumerConfig {
     kafkaListenerContainerFactory() {
 
         ConcurrentKafkaListenerContainerFactory<String, Message> factory =
-                new ConcurrentKafkaListenerContainerFactory<>();
+            new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }

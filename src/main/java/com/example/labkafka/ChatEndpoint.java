@@ -39,11 +39,11 @@ public class ChatEndpoint {
 
     @GetMapping(value = "/read", produces = TEXT_EVENT_STREAM_VALUE)
     public Flux<MessageWithPartition> read(
-            @RequestParam(value = "sender", required = false) String sender
+        @RequestParam(value = "sender", required = false) String sender
     ) {
-        if(sender == null) {
+        if (sender == null) {
             return chatService.readMessages();
         }
-        return chatService.readMessages().filter(message ->sender.equals(message.getSender()));
+        return chatService.readMessages().filter(message -> sender.equals(message.getSender()));
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.Map;
+
 import org.apache.kafka.common.TopicPartition;
 
 import static com.example.labkafka.configuration.KafkaTopicConfig.CHAT_TOPIC_NAME;
@@ -29,23 +30,23 @@ public class ChatListener implements ConsumerSeekAware {
 
     @KafkaListener(topics = CHAT_TOPIC_NAME)
     public void listenMessages(
-            @Payload Message message,
-            @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition
+        @Payload Message message,
+        @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition
     ) {
 
         logger.info("Received Message: {}", message);
         MessageWithPartition messageWithPartition = new MessageWithPartition(
-                message.getSender(),
-                message.getAt(),
-                message.getText(),
-                partition);
+            message.getSender(),
+            message.getAt(),
+            message.getText(),
+            partition);
         chatService.consumeMessage(messageWithPartition);
     }
 
     @Override
     public void onPartitionsAssigned(Map<TopicPartition, Long> assignments, ConsumerSeekCallback callback) {
         assignments.keySet().stream()
-                .filter(partition -> CHAT_TOPIC_NAME.equals(partition.topic()))
-                .forEach(partition -> callback.seekToBeginning(CHAT_TOPIC_NAME, partition.partition()));
+            .filter(partition -> CHAT_TOPIC_NAME.equals(partition.topic()))
+            .forEach(partition -> callback.seekToBeginning(CHAT_TOPIC_NAME, partition.partition()));
     }
 }
